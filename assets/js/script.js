@@ -4,7 +4,7 @@
  * Author: Hasin Hayder
  * URL: https://github.com/hasinhayder/
  * License: MIT
- * Version: 1.0.0
+ * Version: 1.0.1
  */
 
 tailwind.config = {
