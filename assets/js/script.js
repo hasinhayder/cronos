@@ -51,12 +51,12 @@ function clockApp() {
         currentQuote: '',
         notes: '',
         websites: [
-            { url: '' },
-            { url: '' },
-            { url: '' },
-            { url: '' },
-            { url: '' },
-            { url: '' }
+            { url: 'https://github.com/hasinhayder/' },
+            { url: 'https://github.com/hasinhayder/cronos' },
+            { url: 'https://www.linkedin.com/in/thestoryteller/' },
+            { url: 'https://www.facebook.com/hasin' },
+            { url: 'https://twitter.com/hasin' },
+            { url: 'https://medium.com/@hasinhayder' }
         ],
         themes: {
             dark: {
