@@ -436,6 +436,7 @@ function clockApp() {
             }
         },
         handleKeyPress(event) {
+            return;
             if (event.key === 'n' || event.key === 'N') {
                 this.notesOpen = !this.notesOpen;
             } else if (event.key === 's' || event.key === 'S') {
