@@ -30,6 +30,8 @@
             border-radius: 50%;
             pointer-events: none;
         }
+
+        [x-cloak] { display: none !important; }
     </style>
 </head>
 
@@ -95,7 +97,7 @@
             <a x-show="link.url" :href="link.url" target="_blank" class="mr-2 p-2 px-5 rounded-full transition-colors duration-200" :class="themes[currentTheme].website" x-text="index+1"></a>
         </template>
     </footer>
-    <div x-show="settingsOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+    <div x-cloak x-show="settingsOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
         <div @click.outside="settingsOpen = false" @keydown.escape.window="settingsOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg max-h-screen overflow-y-auto w-full max-w-md'">
             <h2 class="text-2xl font-bold mb-4">Clock Settings</h2>
             <div class="mb-4">
@@ -157,7 +159,7 @@
             <button @click="settingsOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 " :class="themes[currentTheme].button">Save Settings</button>
         </div>
     </div>
-    <div x-show="addLocationOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+    <div x-cloak x-show="addLocationOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
         <div @keydown.escape.window="addLocationOpen = false" @click.outside = "addLocationOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg'">
             <h2 class="text-2xl font-bold mb-4">Add Location</h2>
             <div class="mb-4">
@@ -176,23 +178,23 @@
             <button @click="addLocationOpen = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
         </div>
     </div>
-    <div x-show="notesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+    <div x-cloak x-show="notesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
         <div @keydown.escape.window="notesOpen = false" @click.outside="notesOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-md'">
             <h2 class="text-2xl font-bold mb-4">Notes</h2>
             <textarea x-model="notes" :class="themes[currentTheme].input + ' h-96 mb-4'" placeholder="Enter your notes here..."></textarea>
             <button @click="notesOpen = false; saveToLocalStorage()" class="px-4 py-2 rounded" :class="themes[currentTheme].button">Save Note</button>
         </div>
     </div>
-    <div x-show="websitesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+    <div x-cloak x-show="websitesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
         <div @keydown.escape.window="websitesOpen = false" @click.outside="websitesOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-md'">
-            <h2 class="text-2xl font-bold mb-4">Websites</h2>
+            <h2 class="text-2xl font-bold mb-4">Bookmarks</h2>
             <template x-for="(link, index) in websites" :key="index">
                 <div class="mb-4 flex items-center">
                     <input type="text" x-model="websites[index].url" :class="themes[currentTheme].input + ' flex-grow mr-2'" :placeholder="`Website ${index + 1} URL`">
 
                 </div>
             </template>
-            <button @click="websitesOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 rounded" :class="themes[currentTheme].button">Save Websites</button>
+            <button @click="websitesOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 rounded" :class="themes[currentTheme].button">Save Bookmarks</button>
         </div>
     </div>
     <script src="assets/js/script.js"></script>
