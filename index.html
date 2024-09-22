@@ -6,46 +6,7 @@
     <title>Cronos</title>
     <script src="//cdn.tailwindcss.com"></script>
     <script defer src="//cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: { "50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd", "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8", "800": "#1e40af", "900": "#1e3a8a", "950": "#172554" }
-                    },
-                    fontSize: {
-                        '10xl': '10rem',
-                        '11xl': '12rem',
-                        '12xl': '14rem',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
-        .particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body class="h-screen flex flex-col transition-colors duration-300 overflow-hidden" x-data="clockApp()" x-init="init()" :class="themes[currentTheme].background + ' ' + themes[currentTheme].text" @keydown.window="handleKeyPress($event)">
@@ -79,7 +40,7 @@
             <div id="clock" class="text-7xl sm:text-8xl md:text-10xl lg:text-11xl xl:text-12xl font-bold mb-8 text-center md:text-left tracking-tighter">
                 <p class="flex" x-text="currentTime">00:00:00</p>
             </div>
-            <div class="mt-10 md:text-2xl italic text-center md:text-left" x-show="showQuote" x-text="currentQuote"></div>
+            <div class="mt-20 md:text-2xl text-center md:text-left" x-show="showQuote" x-text="currentQuote"></div>
         </div>
         <!-- <div id="sidebar" class="w-full md:w-1/4 p-8 flex flex-col justify-around transition-colors duration-300" :class="themes[currentTheme].sidebar"> -->
         <div id="sidebar" class="w-full md:w-1/4 p-8 flex flex-col justify-around transition-colors duration-300">
@@ -189,8 +150,8 @@
     <div x-show="notesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
         <div @click.outside="notesOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-md'">
             <h2 class="text-2xl font-bold mb-4">Notes</h2>
-            <textarea x-model="notes" :class="themes[currentTheme].input + ' h-40 mb-4'" placeholder="Enter your notes here..."></textarea>
-            <button @click="notesOpen = false; saveToLocalStorage()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save Note</button>
+            <textarea x-model="notes" :class="themes[currentTheme].input + ' h-96 mb-4'" placeholder="Enter your notes here..."></textarea>
+            <button @click="notesOpen = false; saveToLocalStorage()" class="px-4 py-2 rounded" :class="themes[currentTheme].button" >Save Note</button>
         </div>
     </div>
     <div x-show="websitesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
@@ -202,7 +163,7 @@
                    
                 </div>
             </template>
-            <button @click="websitesOpen = false; saveToLocalStorage()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save Websites</button>
+            <button @click="websitesOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 rounded" :class="themes[currentTheme].button">Save Websites</button>
         </div>
     </div>
     <script src="assets/js/script.js"></script>

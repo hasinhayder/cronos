@@ -1,3 +1,17 @@
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                primary: { "50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd", "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8", "800": "#1e40af", "900": "#1e3a8a", "950": "#172554" }
+            },
+            fontSize: {
+                '10xl': '10rem',
+                '11xl': '12rem',
+                '12xl': '14rem',
+            }
+        }
+    }
+}
 function clockApp() {
     return {
         currentTime: '00:00:00',
@@ -5,14 +19,14 @@ function clockApp() {
         use24Hour: true,
         showQuote: true,
         currentTheme: 'dark',
-        mainClockTimezone: 'America/New_York',
-        mainClockName: 'Main Clock',
+        mainClockTimezone: 'Asia/Dhaka',
+        mainClockName: 'Dhaka',
         locations: [
-            { name: 'London', timezone: 'Europe/London', time: 0 },
-            { name: 'Tokyo', timezone: 'Asia/Tokyo', time: 0 },
-            { name: 'Sydney', timezone: 'Australia/Adelaide', time: 0 },
+            { name: 'Dublin', timezone: 'GMT', time: 0 },
+            { name: 'Ahmedabad', timezone: 'Asia/Kolkata', time: 0 },
+            { name: 'California', timezone: 'Etc/GMT+7', time: 0 },
         ],
-        locationCount:3,
+        locationCount: 3,
         settingsOpen: false,
         addLocationOpen: false,
         notesOpen: false,
@@ -28,12 +42,12 @@ function clockApp() {
         currentQuote: '',
         notes: '',
         websites: [
-            { url: '', icon: 'globe' },
-            { url: '', icon: 'globe' },
-            { url: '', icon: 'globe' },
-            { url: '', icon: 'globe' },
-            { url: '', icon: 'globe' },
-            { url: '', icon: 'globe' }
+            { url: '' },
+            { url: '' },
+            { url: '' },
+            { url: '' },
+            { url: '' },
+            { url: '' }
         ],
         themes: {
             dark: {
@@ -319,7 +333,7 @@ function clockApp() {
             if (this.showSeconds) {
                 options.second = '2-digit';
             }
-            
+
             this.currentTime = now.toLocaleTimeString('en-GB', options).toUpperCase();
             this.updateAllLocationTime();
         },
@@ -337,7 +351,7 @@ function clockApp() {
                 hour12: !this.use24Hour,
                 timeZone: timezone
             };
-            return now.toLocaleTimeString('en-GB', options);
+            return now.toLocaleTimeString('en-GB', options).toUpperCase();
         },
         applyTheme() {
             document.body.className = `h-screen flex flex-col transition-colors duration-300 overflow-hidden ${this.themes[this.currentTheme].background} ${this.themes[this.currentTheme].text}`;
@@ -357,7 +371,7 @@ function clockApp() {
         },
         saveLocation() {
             if (this.newLocationName && this.newLocationTimezone) {
-                this.locations.push({ name: this.newLocationName, timezone: this.newLocationTimezone, time:this.getLocationTime(this.newLocationTimezone) });
+                this.locations.push({ name: this.newLocationName, timezone: this.newLocationTimezone, time: this.getLocationTime(this.newLocationTimezone) });
                 this.newLocationName = '';
                 this.newLocationTimezone = '';
                 this.addLocationOpen = false;
@@ -376,7 +390,7 @@ function clockApp() {
             return this.websites[index].icon || 'globe';
         },
         saveToLocalStorage() {
-            this.locations = this.locations.slice(0,this.locationCount);
+            this.locations = this.locations.slice(0, this.locationCount);
             const data = {
                 showSeconds: this.showSeconds,
                 use24Hour: this.use24Hour,
@@ -409,8 +423,8 @@ function clockApp() {
                 this.notes = data.notes
                 this.websites = data.websites
                 this.showQuote = data.showQuote,
-                this.newLocationTimezone = data.newLocationTimezone,
-                this.locationCount = data.locationCount
+                    this.newLocationTimezone = data.newLocationTimezone,
+                    this.locationCount = data.locationCount
             }
         },
         handleKeyPress(event) {
