@@ -95,7 +95,7 @@
                     </div>
                 </template>
             </div>
-            <button x-show="locations.length < 3" @click="addLocationOpen = true" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Location</button>
+            <button x-show="locations.length < 3" @click="addLocationOpen = true" class="mt-6 px-4 py-2 rounded" :class="themes[currentTheme].button" >Add Location</button>
         </div>
     </main>
     <footer class="p-4 flex justify-start items-center relative z-10">
