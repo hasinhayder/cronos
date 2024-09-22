@@ -25,11 +25,14 @@ Check the live demo here - [Live Demo](https://hasinhayder.github.io/cronos/)
 - **Settings**: Press `S` to open the settings panel.
 - **Notes**: Press `N` to open the notes section.
 - **Websites**: Press `W` to open the quick access websites panel.
+- **Close Settings**: Press `Escape` key to close these sections.
+
 
 ## Technologies Used
 
 - **HTML**
 - **Tailwind CSS**
+- **JavaScript**
 - **Alpine.js**
 
 ## Getting Started
