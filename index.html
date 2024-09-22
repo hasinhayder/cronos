@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronos</title>
+    <script src="//cdn.tailwindcss.com"></script>
+    <script defer src="//cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { "50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd", "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8", "800": "#1e40af", "900": "#1e3a8a", "950": "#172554" }
+                    },
+                    fontSize: {
+                        '10xl': '10rem',
+                        '11xl': '12rem',
+                        '12xl': '14rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="h-screen flex flex-col transition-colors duration-300 overflow-hidden" x-data="clockApp()" x-init="init()" :class="themes[currentTheme].background + ' ' + themes[currentTheme].text" @keydown.window="handleKeyPress($event)">
+    <div id="particles-container" class="absolute inset-0 pointer-events-none" x-show="showParticles"></div>
+    <header class="p-4 flex justify-between items-center relative z-10">
+        <div class="flex items-center space-x-2">
+            <h1 class="text-xl">Cronos</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button @click="websitesOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                </svg>
+            </button>
+            <button @click="notesOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
+            </button>
+            <button @click="settingsOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </button>
+        </div>
+    </header>
+    <main class="flex-grow flex flex-col md:flex-row relative z-10">
+        <div class="w-full md:w-3/4 p-8 flex flex-col justify-center">
+            <div class="text-2xl font-semibold mb-2" x-text="mainClockName"></div>
+            <div id="clock" class="text-7xl sm:text-8xl md:text-10xl lg:text-11xl xl:text-12xl font-bold mb-8 text-center md:text-left tracking-tighter">
+                <p class="flex" x-text="currentTime">00:00:00</p>
+            </div>
+            <div class="mt-10 md:text-2xl italic text-center md:text-left" x-show="showQuote" x-text="currentQuote"></div>
+        </div>
+        <div id="sidebar" class="w-full md:w-1/4 p-8 flex flex-col justify-around transition-colors duration-300" :class="themes[currentTheme].sidebar">
+            <div id="locations-container" class="space-y-6">
+                <template x-for="(location, index) in locations" :key="index">
+                    <div :class="`relative p-6 ${index < locations.length - 1 ? 'border-b' : ''} ${themes[currentTheme].border} group rounded-lg shadow-md`">
+                        <h2 class="text-2xl font-bold mb-3" x-text="location.name"></h2>
+                        <div class="text-4xl font-semibold" x-text="location.time"></div>
+                        <button @click="deleteLocation(index)" class="delete-location absolute top-2 right-2 bg-red-500 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                        </button>
+                    </div>
+                </template>
+            </div>
+            <button x-show="locations.length < 3" @click="addLocationOpen = true" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Location</button>
+        </div>
+    </main>
+    <footer class="p-4 flex justify-start items-center relative z-10">
+        <template x-for="(link, index) in websites" :key="index">
+            <a x-show="link.url" :href="link.url" target="_blank" class="mr-2 p-2 px-5 rounded-full transition-colors duration-200" :class="themes[currentTheme].website" x-text="index+1"></a>
+        </template>
+    </footer>
+    <div x-show="settingsOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div @click.outside="settingsOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg max-h-screen overflow-y-auto w-full max-w-md'">
+            <h2 class="text-2xl font-bold mb-4">Clock Settings</h2>
+            <div class="mb-4">
+                <label class="block mb-2">Main Clock Name</label>
+                <input type="text" x-model="mainClockName" :class="themes[currentTheme].input">
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center">
+                    <input type="checkbox" x-model="showSeconds" class="mr-2">
+                    Show Seconds
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center">
+                    <input type="checkbox" x-model="use24Hour" class="mr-2">
+                    Use 24-Hour Format
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center">
+                    <input type="checkbox" x-model="showParticles" class="mr-2">
+                    Show Particles
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="flex items-center">
+                    <input type="checkbox" x-model="showQuote" class="mr-2">
+                    Show Quote
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="block mb-2">Color Theme</label>
+                <select x-model="currentTheme" :class="themes[currentTheme].input">
+                    <template x-for="(theme, name) in themes" :key="name">
+                        <option :value="name" x-text="name.charAt(0).toUpperCase() + name.slice(1)" :selected="currentTheme === name"></option>
+                    </template>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block mb-2">Main Clock Timezone</label>
+                <select x-model="mainClockTimezone" :class="themes[currentTheme].input">
+                    <template x-for="(timezone,index) in timezones" :key="index">
+                        <option :value="timezone.zone" x-text="`${timezone.name} (${timezone.zone})`"></option>
+                    </template>
+                </select>
+            </div>
+            <div class="mb-4">
+                <h3 class="text-xl font-bold mb-2">Quotes</h3>
+                <template x-for="(quote, index) in quotes" :key="index">
+                    <div class="mb-2">
+                        <input type="text" x-model="quotes[index]" :class="themes[currentTheme].input + ' mb-1'" :placeholder="`Quote ${index + 1}`">
+                    </div>
+                </template>
+            </div>
+            <button @click="settingsOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 " :class="themes[currentTheme].button" >Close</button>
+        </div>
+    </div>
+    <div x-show="addLocationOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div :class="themes[currentTheme].sidebar + ' p-8 rounded-lg'">
+            <h2 class="text-2xl font-bold mb-4">Add Location</h2>
+            <div class="mb-4">
+                <label class="block mb-2">Location Name</label>
+                <input type="text" x-model="newLocationName" :class="themes[currentTheme].input">
+            </div>
+            <div class="mb-4">
+                <label class="block mb-2">Timezone</label>
+                <select x-model="newLocationTimezone" :class="themes[currentTheme].input">
+                    <template x-for="(timezone,index) in timezones" :key="index">
+                        <option :value="timezone.zone" x-text="`${timezone.name} (${timezone.zone})`"></option>
+                    </template>
+                </select>
+            </div>
+            <button @click="saveLocation" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2">Save</button>
+            <button @click="addLocationOpen = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+        </div>
+    </div>
+    <div x-show="notesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div @click.outside="notesOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-md'">
+            <h2 class="text-2xl font-bold mb-4">Notes</h2>
+            <textarea x-model="notes" :class="themes[currentTheme].input + ' h-40 mb-4'" placeholder="Enter your notes here..."></textarea>
+            <button @click="notesOpen = false; saveToLocalStorage()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Close</button>
+        </div>
+    </div>
+    <div x-show="websitesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div @click.outside="websitesOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-md'">
+            <h2 class="text-2xl font-bold mb-4">Websites</h2>
+            <template x-for="(link, index) in websites" :key="index">
+                <div class="mb-4 flex items-center">
+                    <input type="text" x-model="websites[index].url" :class="themes[currentTheme].input + ' flex-grow mr-2'" :placeholder="`Website ${index + 1} URL`">
+                   
+                </div>
+            </template>
+            <button @click="websitesOpen = false; saveToLocalStorage()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Close</button>
+        </div>
+    </div>
+    <script>
+        function clockApp() {
+            return {
+                currentTime: '00:00:00',
+                showSeconds: true,
+                use24Hour: true,
+                showQuote: true,
+                currentTheme: 'dark',
+                mainClockTimezone: 'America/New_York',
+                mainClockName: 'Main Clock',
+                locations: [
+                    { name: 'London', timezone: 'Europe/London', time: 0 },
+                    { name: 'Tokyo', timezone: 'Asia/Tokyo', time: 0 },
+                    { name: 'Sydney', timezone: 'Australia/Adelaide', time: 0 },
+                ],
+                settingsOpen: false,
+                addLocationOpen: false,
+                notesOpen: false,
+                websitesOpen: false,
+                newLocationName: '',
+                newLocationTimezone: '',
+                showParticles: true,
+                quotes: [
+                    "The only way to do great work is to love what you do. - Steve Jobs",
+                    "Time is what we want most, but what we use worst. - William Penn",
+                    "The two most powerful warriors are patience and time. - Leo Tolstoy"
+                ],
+                currentQuote: '',
+                notes: '',
+                websites: [
+                    { url: '', icon: 'globe' },
+                    { url: '', icon: 'globe' },
+                    { url: '', icon: 'globe' },
+                    { url: '', icon: 'globe' },
+                    { url: '', icon: 'globe' },
+                    { url: '', icon: 'globe' }
+                ],
+                themes: {
+                    dark: {
+                        background: 'bg-gray-900',
+                        text: 'text-white',
+                        sidebar: 'bg-gray-800',
+                        border: 'border-gray-700',
+                        input: 'bg-gray-700 text-white p-2 rounded w-full',
+                        website: 'bg-gray-700 text-white hover:bg-gray-600',
+                        button: 'bg-gray-700 text-white hover:bg-gray-600'
+                    },
+                    light: {
+                        background: 'bg-gray-100',
+                        text: 'text-gray-900',
+                        sidebar: 'bg-white',
+                        border: 'border-gray-300',
+                        input: 'bg-white text-gray-900 p-2 rounded w-full border border-gray-300',
+                        website: 'bg-gray-300 text-gray-900 hover:bg-gray-200',
+                        button: 'bg-gray-300 text-gray-900 hover:bg-gray-200'
+                    },
+                    sepia: {
+                        background: 'bg-yellow-100',
+                        text: 'text-yellow-900',
+                        sidebar: 'bg-yellow-200',
+                        border: 'border-yellow-300',
+                        input: 'bg-yellow-50 text-yellow-900 p-2 rounded w-full border border-yellow-300',
+                        website: 'bg-yellow-900 text-white hover:bg-yellow-800',
+                        button: 'bg-yellow-900 text-white hover:bg-yellow-800'
+                    },
+                    ocean: {
+                        background: 'bg-blue-900',
+                        text: 'text-blue-100',
+                        sidebar: 'bg-blue-800',
+                        border: 'border-blue-700',
+                        input: 'bg-blue-700 text-blue-100 p-2 rounded w-full border border-blue-600',
+                        website: 'bg-blue-700 text-blue-100 hover:bg-blue-600',
+                        button: 'bg-blue-700 text-blue-100 hover:bg-blue-600'
+                    },
+                    forest: {
+                        background: 'bg-green-900',
+                        text: 'text-green-100',
+                        sidebar: 'bg-green-800',
+                        border: 'border-green-700',
+                        input: 'bg-green-700 text-green-100 p-2 rounded w-full border border-green-600',
+                        website: 'bg-green-700 text-green-100 hover:bg-green-600',
+                        button: 'bg-green-700 text-green-100 hover:bg-green-600'
+                    },
+                    sunset: {
+                        background: 'bg-orange-100',
+                        text: 'text-orange-900',
+                        sidebar: 'bg-orange-200',
+                        border: 'border-orange-300',
+                        input: 'bg-orange-50 text-orange-900 p-2 rounded w-full border border-orange-300',
+                        website: 'bg-orange-900 text-white hover:bg-orange-800',
+                        button: 'bg-orange-900 text-white hover:bg-orange-800'
+                    },
+                    midnight: {
+                        background: 'bg-indigo-900',
+                        text: 'text-indigo-100',
+                        sidebar: 'bg-indigo-800',
+                        border: 'border-indigo-700',
+                        input: 'bg-indigo-700 text-indigo-100 p-2 rounded w-full border border-indigo-600',
+                        website: 'bg-indigo-700 text-indigo-100 hover:bg-indigo-600',
+                        button: 'bg-indigo-700 text-indigo-100 hover:bg-indigo-600'
+                    },
+                    lavender: {
+                        background: 'bg-purple-100',
+                        text: 'text-purple-900',
+                        sidebar: 'bg-purple-200',
+                        border: 'border-purple-300',
+                        input: 'bg-purple-50 text-purple-900 p-2 rounded w-full border border-purple-300',
+                        website: 'bg-purple-900 text-white hover:bg-purple-800',
+                        button: 'bg-purple-900 text-white hover:bg-purple-800'
+                    },
+                    fire: {
+                        background: 'bg-red-900',
+                        text: 'text-red-100',
+                        sidebar: 'bg-red-800',
+                        border: 'border-red-700',
+                        input: 'bg-red-700 text-red-100 p-2 rounded w-full border border-red-600',
+                        website: 'bg-red-700 text-red-100 hover:bg-red-600',
+                        button: 'bg-red-700 text-red-100 hover:bg-red-600'
+                    },
+                    sky: {
+                        background: 'bg-cyan-900',
+                        text: 'text-cyan-100',
+                        sidebar: 'bg-cyan-800',
+                        border: 'border-cyan-700',
+                        input: 'bg-cyan-700 text-cyan-100 p-2 rounded w-full border border-cyan-600',
+                        website: 'bg-cyan-700 text-cyan-100 hover:bg-cyan-600',
+                        button: 'bg-cyan-700 text-cyan-100 hover:bg-cyan-600'
+                    },
+                    rose: {
+                        background: 'bg-pink-900',
+                        text: 'text-pink-100',
+                        sidebar: 'bg-pink-800',
+                        border: 'border-pink-700',
+                        input: 'bg-pink-700 text-pink-100 p-2 rounded w-full border border-pink-600',
+                        website: 'bg-pink-700 text-pink-100 hover:bg-pink-600',
+                        button: 'bg-pink-700 text-pink-100 hover:bg-pink-600'
+                    },
+                    mint: {
+                        background: 'bg-green-300',
+                        text: 'text-green-900',
+                        sidebar: 'bg-green-400',
+                        border: 'border-green-500',
+                        input: 'bg-green-200 text-green-900 p-2 rounded w-full border border-green-500',
+                        website: 'bg-green-500 text-white hover:bg-green-400',
+                        button: 'bg-green-500 text-white hover:bg-green-600'
+                    },
+                    lemon: {
+                        background: 'bg-yellow-500',
+                        text: 'text-yellow-100',
+                        sidebar: 'bg-yellow-600',
+                        border: 'border-yellow-700',
+                        input: 'bg-yellow-400 text-yellow-100 p-2 rounded w-full border border-yellow-700',
+                        website: 'bg-yellow-700 text-white hover:bg-yellow-600',
+                        button: 'bg-yellow-700 text-white hover:bg-yellow-800'
+                    },
+                    lime: {
+                        background: 'bg-green-500',
+                        text: 'text-green-100',
+                        sidebar: 'bg-green-600',
+                        border: 'border-green-700',
+                        input: 'bg-green-400 text-green-100 p-2 rounded w-full border border-green-700',
+                        website: 'bg-green-700 text-white hover:bg-green-600',
+                        button: 'bg-green-700 text-white hover:bg-green-800'
+                    },
+                    cherry: {
+                        background: 'bg-red-500',
+                        text: 'text-red-100',
+                        sidebar: 'bg-red-600',
+                        border: 'border-red-700',
+                        input: 'bg-red-400 text-red-100 p-2 rounded w-full border border-red-700',
+                        website: 'bg-red-700 text-white hover:bg-red-600',
+                        button: 'bg-red-700 text-white hover:bg-red-800'
+                    },
+                    teal: {
+                        background: 'bg-teal-500',
+                        text: 'text-teal-100',
+                        sidebar: 'bg-teal-600',
+                        border: 'border-teal-700',
+                        input: 'bg-teal-400 text-teal-100 p-2 rounded w-full border border-teal-700',
+                        website: 'bg-teal-700 text-white hover:bg-teal-600',
+                        button: 'bg-teal-700 text-white hover:bg-teal-800'
+                    },
+                    plum: {
+                        background: 'bg-purple-800',
+                        text: 'text-purple-100',
+                        sidebar: 'bg-purple-900',
+                        border: 'border-purple-700',
+                        input: 'bg-purple-700 text-purple-100 p-2 rounded w-full border border-purple-600',
+                        website: 'bg-purple-700 text-purple-100 hover:bg-purple-600',
+                        button: 'bg-purple-700 text-purple-100 hover:bg-purple-600'
+                    },
+                    coral: {
+                        background: 'bg-red-300',
+                        text: 'text-red-900',
+                        sidebar: 'bg-red-400',
+                        border: 'border-red-500',
+                        input: 'bg-red-200 text-red-900 p-2 rounded w-full border border-red-500',
+                        website: 'bg-red-500 text-white hover:bg-red-400',
+                        button: 'bg-red-700 text-white hover:bg-red-600'
+                    },
+                    aqua: {
+                        background: 'bg-blue-300',
+                        text: 'text-blue-900',
+                        sidebar: 'bg-blue-400',
+                        border: 'border-blue-500',
+                        input: 'bg-blue-200 text-blue-900 p-2 rounded w-full border border-blue-500',
+                        website: 'bg-blue-500 text-white hover:bg-blue-400',
+                        button: 'bg-blue-500 text-white hover:bg-blue-600'
+                    },
+                    amber: {
+                        background: 'bg-yellow-600',
+                        text: 'text-yellow-100',
+                        sidebar: 'bg-yellow-700',
+                        border: 'border-yellow-800',
+                        input: 'bg-yellow-500 text-yellow-100 p-2 rounded w-full border border-yellow-800',
+                        website: 'bg-yellow-800 text-white hover:bg-yellow-700',
+                        button: 'bg-yellow-800 text-white hover:bg-yellow-900'
+                    },
+                    emerald: {
+                        background: 'bg-green-700',
+                        text: 'text-green-100',
+                        sidebar: 'bg-green-800',
+                        border: 'border-green-900',
+                        input: 'bg-green-600 text-green-100 p-2 rounded w-full border border-green-900',
+                        website: 'bg-green-900 text-white hover:bg-green-800',
+                        button: 'bg-green-500 text-white hover:bg-green-600'
+                    },
+                    fuchsia: {
+                        background: 'bg-pink-700',
+                        text: 'text-pink-100',
+                        sidebar: 'bg-pink-800',
+                        border: 'border-pink-900',
+                        input: 'bg-pink-600 text-pink-100 p-2 rounded w-full border border-pink-900',
+                        website: 'bg-pink-900 text-white hover:bg-pink-800',
+                        button: 'bg-pink-500 text-white hover:bg-pink-400'
+                    },
+                    blush: {
+                        background: 'bg-pink-200',
+                        text: 'text-pink-900',
+                        sidebar: 'bg-pink-300',
+                        border: 'border-pink-400',
+                        input: 'bg-pink-100 text-pink-900 p-2 rounded w-full border border-pink-400',
+                        website: 'bg-pink-400 text-white hover:bg-pink-300',
+                        button: 'bg-pink-400 text-white hover:bg-pink-500'
+                    }
+                },
+                timezones: [
+                    { name: '', zone: 'Select Time Zone' },
+                    { name: 'GMT-12:00', zone: 'Etc/GMT+12' },
+                    { name: 'GMT-11:30', zone: 'Pacific/Niue' },
+                    { name: 'GMT-11:00', zone: 'Etc/GMT+11' },
+                    { name: 'GMT-10:30', zone: 'Pacific/Marquesas' },
+                    { name: 'GMT-10:00', zone: 'Etc/GMT+10' },
+                    { name: 'GMT-09:30', zone: 'Pacific/Marquesas' },
+                    { name: 'GMT-09:00', zone: 'Etc/GMT+9' },
+                    { name: 'GMT-08:30', zone: 'Pacific/Pitcairn' },
+                    { name: 'GMT-08:00', zone: 'Etc/GMT+8' },
+                    { name: 'GMT-07:30', zone: 'America/Phoenix' },
+                    { name: 'GMT-07:00', zone: 'Etc/GMT+7' },
+                    { name: 'GMT-06:30', zone: 'Pacific/Easter' },
+                    { name: 'GMT-06:00', zone: 'Etc/GMT+6' },
+                    { name: 'GMT-05:30', zone: 'America/Caracas' },
+                    { name: 'GMT-05:00', zone: 'Etc/GMT+5' },
+                    { name: 'GMT-04:30', zone: 'America/Caracas' },
+                    { name: 'GMT-04:00', zone: 'Etc/GMT+4' },
+                    { name: 'GMT-03:30', zone: 'America/St_Johns' },
+                    { name: 'GMT-03:00', zone: 'Etc/GMT+3' },
+                    { name: 'GMT-02:30', zone: 'America/St_Johns' },
+                    { name: 'GMT-02:00', zone: 'Etc/GMT+2' },
+                    { name: 'GMT-01:30', zone: 'Atlantic/Cape_Verde' },
+                    { name: 'GMT-01:00', zone: 'Etc/GMT+1' },
+                    { name: 'GMT+00:00', zone: 'Etc/GMT' },
+                    { name: 'GMT+00:30', zone: 'Africa/Monrovia' },
+                    { name: 'GMT+01:00', zone: 'Etc/GMT-1' },
+                    { name: 'GMT+01:30', zone: 'Africa/Libreville' },
+                    { name: 'GMT+02:00', zone: 'Etc/GMT-2' },
+                    { name: 'GMT+02:30', zone: 'Africa/Khartoum' },
+                    { name: 'GMT+03:00', zone: 'Etc/GMT-3' },
+                    { name: 'GMT+03:30', zone: 'Iran' },
+                    { name: 'GMT+04:00', zone: 'Etc/GMT-4' },
+                    { name: 'GMT+04:30', zone: 'Asia/Kabul' },
+                    { name: 'GMT+05:00', zone: 'Etc/GMT-5' },
+                    { name: 'GMT+05:30', zone: 'Asia/Kolkata' },
+                    { name: 'GMT+05:45', zone: 'Asia/Kathmandu' },
+                    { name: 'GMT+06:00', zone: 'Asia/Dhaka' },
+                    { name: 'GMT+06:30', zone: 'Asia/Yangon' },
+                    { name: 'GMT+07:00', zone: 'Etc/GMT-7' },
+                    { name: 'GMT+07:30', zone: 'Asia/Jakarta' },
+                    { name: 'GMT+08:00', zone: 'Etc/GMT-8' },
+                    { name: 'GMT+08:30', zone: 'Asia/Pyongyang' },
+                    { name: 'GMT+09:00', zone: 'Etc/GMT-9' },
+                    { name: 'GMT+09:30', zone: 'Australia/Adelaide' },
+                    { name: 'GMT+10:00', zone: 'Etc/GMT-10' },
+                    { name: 'GMT+10:30', zone: 'Australia/Lord_Howe' },
+                    { name: 'GMT+11:00', zone: 'Etc/GMT-11' },
+                    { name: 'GMT+11:30', zone: 'Pacific/Norfolk' },
+                    { name: 'GMT+12:00', zone: 'Etc/GMT-12' },
+                    { name: 'GMT+12:45', zone: 'Pacific/Chatham' },
+                    { name: 'GMT+13:00', zone: 'Pacific/Apia' },
+                    { name: 'GMT+14:00', zone: 'Pacific/Kiritimati' }
+                ],
+                init() {
+                    this.loadFromLocalStorage();
+                    this.updateClock();
+                    setInterval(() => this.updateClock(), 1000);
+                    this.createParticles();
+                    this.applyTheme();
+                    this.updateQuote();
+                    setInterval(() => this.updateQuote(), 60000); // Change quote every minute
+                },
+                updateClock() {
+                    const now = new Date();
+                    const options = {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: !this.use24Hour,
+                        timeZone: this.mainClockTimezone
+                    };
+                    if (this.showSeconds) {
+                        options.second = '2-digit';
+                    }
+                    
+                    this.currentTime = now.toLocaleTimeString('en-GB', options).toUpperCase();
+                    this.updateAllLocationTime();
+                },
+
+                updateAllLocationTime() {
+                    for (let i = 0; i < this.locations.length; i++) {
+                        this.locations[i].time = this.getLocationTime(this.locations[i].timezone);
+                    }
+                },
+                getLocationTime(timezone) {
+                    const now = new Date();
+                    const options = {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: !this.use24Hour,
+                        timeZone: timezone
+                    };
+                    return now.toLocaleTimeString('en-GB', options);
+                },
+                applyTheme() {
+                    document.body.className = `h-screen flex flex-col transition-colors duration-300 overflow-hidden ${this.themes[this.currentTheme].background} ${this.themes[this.currentTheme].text}`;
+                },
+                createParticles() {
+                    const container = document.getElementById('particles-container');
+                    container.innerHTML = '';
+                    for (let i = 0; i < 50; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = `${Math.random() * 100}%`;
+                        particle.style.top = `${Math.random() * 100}%`;
+                        particle.style.animation = `float ${Math.random() * 3 + 2}s ease-in-out infinite`;
+                        particle.style.animationDelay = `${Math.random() * 2}s`;
+                        container.appendChild(particle);
+                    }
+                },
+                saveLocation() {
+                    if (this.newLocationName && this.newLocationTimezone) {
+                        this.locations.push({ name: this.newLocationName, timezone: this.newLocationTimezone, time:this.getLocationTime(this.newLocationTimezone) });
+                        this.newLocationName = '';
+                        this.newLocationTimezone = '';
+                        this.addLocationOpen = false;
+                        this.saveToLocalStorage();
+                    }
+                },
+                deleteLocation(index) {
+                    this.locations.splice(index, 1);
+                    this.saveToLocalStorage();
+                },
+                updateQuote() {
+                    const randomIndex = Math.floor(Math.random() * this.quotes.length);
+                    this.currentQuote = this.quotes[randomIndex];
+                },
+                getWebsiteIcon(index) {
+                    return this.websites[index].icon || 'globe';
+                },
+                saveToLocalStorage() {
+                    const data = {
+                        showSeconds: this.showSeconds,
+                        use24Hour: this.use24Hour,
+                        currentTheme: this.currentTheme,
+                        mainClockTimezone: this.mainClockTimezone,
+                        mainClockName: this.mainClockName,
+                        locations: this.locations,
+                        showParticles: this.showParticles,
+                        quotes: this.quotes,
+                        notes: this.notes,
+                        websites: this.websites,
+                        showQuote: this.showQuote
+                    };
+                    localStorage.setItem('clockAppData', JSON.stringify(data));
+                },
+                loadFromLocalStorage() {
+                    const data = JSON.parse(localStorage.getItem('clockAppData'));
+                    if (data) {
+                        this.showSeconds = data.showSeconds
+                        this.use24Hour = data.use24Hour
+                        this.currentTheme = data.currentTheme
+                        this.mainClockTimezone = data.mainClockTimezone
+                        this.mainClockName = data.mainClockName
+                        this.locations = data.locations
+                        this.showParticles = data.showParticles
+                        this.quotes = data.quotes
+                        this.notes = data.notes
+                        this.websites = data.websites
+                        this.showQuote = data.showQuote
+                    }
+                },
+                handleKeyPress(event) {
+                    if (event.ctrlKey) {
+                        if (event.key === 'n' || event.key === 'N') {
+                            this.notesOpen = !this.notesOpen;
+                        } else if (event.key === 's' || event.key === 'S') {
+                            this.settingsOpen = !this.settingsOpen;
+                        } else if (event.key === 'w' || event.key === 'W') {
+                            this.websitesOpen = !this.websitesOpen;
+                        }
+                    }
+                }
+            };
+        }
+
+    </script>
+</body>
+
+</html>
