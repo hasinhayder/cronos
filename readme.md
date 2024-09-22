@@ -13,11 +13,12 @@ Check the live demo here - [Live Demo](https://hasinhayder.github.io/cronos/)
 
 - **Main Clock**: Customizable name and timezone.
 - **Additional Clocks**: Add multiple location clocks with different timezones.
-- **Themes**: Switch between various color themes.
+- **Themes**: Cronos comes with beautiful color themes and you can switch between them.
 - **Quotes**: Display motivational quotes. You can change them too!
 - **Particles**: Optional particle animation for a dynamic look.
 - **Notes**: Keep personal notes within the app.
-- **Websites**: Quick access to your favorite websites.
+- **Websites**: Quick access to your favorite websites on the bottom left corner.
+- **Memorization**: Remembers your current settings for future visits.
 
 ## Technologies Used
 
