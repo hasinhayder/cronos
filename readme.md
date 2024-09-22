@@ -22,9 +22,9 @@ Check the live demo here - [Live Demo](https://hasinhayder.github.io/cronos/)
 
 ## Keyboard Shortcuts
 
-- **Settings**: Press `S` to open the settings panel.
-- **Notes**: Press `N` to open the notes section.
-- **Websites**: Press `W` to open the quick access websites panel.
+- **Settings**: Press `s` to open the settings panel.
+- **Notes**: Press `n` to open the notes section.
+- **Websites**: Press `b` to open the quick access websites panel.
 - **Close Settings**: Press `Escape` key to close these sections.
 
 

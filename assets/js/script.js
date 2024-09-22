@@ -436,14 +436,12 @@ function clockApp() {
             }
         },
         handleKeyPress(event) {
-            if (event.ctrlKey) {
-                if (event.key === 'n' || event.key === 'N') {
-                    this.notesOpen = !this.notesOpen;
-                } else if (event.key === 's' || event.key === 'S') {
-                    this.settingsOpen = !this.settingsOpen;
-                } else if (event.key === 'b' || event.key === 'B') {
-                    this.websitesOpen = !this.websitesOpen;
-                }
+            if (event.key === 'n' || event.key === 'N') {
+                this.notesOpen = !this.notesOpen;
+            } else if (event.key === 's' || event.key === 'S') {
+                this.settingsOpen = !this.settingsOpen;
+            } else if (event.key === 'b' || event.key === 'B') {
+                this.websitesOpen = !this.websitesOpen;
             }
         }
     };
