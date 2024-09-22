@@ -12,6 +12,7 @@ function clockApp() {
             { name: 'Tokyo', timezone: 'Asia/Tokyo', time: 0 },
             { name: 'Sydney', timezone: 'Australia/Adelaide', time: 0 },
         ],
+        locationCount:3,
         settingsOpen: false,
         addLocationOpen: false,
         notesOpen: false,
@@ -375,6 +376,7 @@ function clockApp() {
             return this.websites[index].icon || 'globe';
         },
         saveToLocalStorage() {
+            this.locations = this.locations.slice(0,this.locationCount);
             const data = {
                 showSeconds: this.showSeconds,
                 use24Hour: this.use24Hour,
@@ -388,6 +390,7 @@ function clockApp() {
                 websites: this.websites,
                 showQuote: this.showQuote,
                 newLocationTimezone: this.newLocationTimezone,
+                locationCount: this.locationCount
             };
             localStorage.setItem('clockAppData', JSON.stringify(data));
         },
@@ -406,7 +409,8 @@ function clockApp() {
                 this.notes = data.notes
                 this.websites = data.websites
                 this.showQuote = data.showQuote,
-                this.newLocationTimezone = data.newLocationTimezone
+                this.newLocationTimezone = data.newLocationTimezone,
+                this.locationCount = data.locationCount
             }
         },
         handleKeyPress(event) {

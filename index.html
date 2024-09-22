@@ -97,7 +97,7 @@
                     </div>
                 </template>
             </div>
-            <button x-show="locations.length < 3" @click="addLocationOpen = true" class="mt-6 px-4 py-2 rounded" :class="themes[currentTheme].button" >Add Location</button>
+            <button x-show="locations.length < locationCount" @click="addLocationOpen = true" class="mt-6 px-4 py-2 rounded" :class="themes[currentTheme].button" >Add Location</button>
         </div>
     </main>
     <footer class="p-4 flex justify-start items-center relative z-10">
@@ -135,6 +135,10 @@
                     <input type="checkbox" x-model="showQuote" class="mr-2">
                     Show Quote
                 </label>
+            </div>
+            <div class="mb-4">
+                <label class="block mb-2">Location Count</label>
+                <input type="number" x-model="locationCount" :class="themes[currentTheme].input" min="1">
             </div>
             <div class="mb-4">
                 <label class="block mb-2">Color Theme</label>
