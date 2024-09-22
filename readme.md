@@ -1,7 +1,3 @@
-Sure! Here's a concise and informative description for your GitHub project:
-
----
-
 # Cronos
 
 Cronos is a beautifully designed, customizable clock application built with HTML, Tailwind CSS, and Alpine.js. It features a main clock with customizable names and timezones, additional location clocks, and various themes to suit your preferences. The application also includes settings for displaying seconds, using a 24-hour format, and showing motivational quotes. 
