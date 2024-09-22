@@ -17,7 +17,7 @@ Check the live demo here - [Live Demo](https://hasinhayder.github.io/cronos/)
 - **Quotes**: Display motivational quotes. You can change them too!
 - **Particles**: Optional particle animation for a dynamic look.
 - **Notes**: Keep personal notes within the app.
-- **Bookmarks**: Quick access to your favorite websites on the bottom left corner.
+- **Bookmarks**: Quick access to your favorite websites on the bottom left corner. Add up to six bookmarks.
 - **Memorization**: Remembers your current settings for future visits.
 
 ## Keyboard Shortcuts
