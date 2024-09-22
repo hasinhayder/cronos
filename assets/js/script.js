@@ -441,7 +441,7 @@ function clockApp() {
                     this.notesOpen = !this.notesOpen;
                 } else if (event.key === 's' || event.key === 'S') {
                     this.settingsOpen = !this.settingsOpen;
-                } else if (event.key === 'w' || event.key === 'W') {
+                } else if (event.key === 'b' || event.key === 'B') {
                     this.websitesOpen = !this.websitesOpen;
                 }
             }
