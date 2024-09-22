@@ -1,3 +1,12 @@
+/**
+ * Clock App
+ * A simple clock app built with Alpine.js and Tailwind CSS
+ * Author: Hasin Hayder
+ * URL: https://github.com/hasinhayder/
+ * License: MIT
+ * Version: 1.0.0
+ */
+
 tailwind.config = {
     theme: {
         extend: {
@@ -35,9 +44,9 @@ function clockApp() {
         newLocationTimezone: '',
         showParticles: true,
         quotes: [
-            "The only way to do great work is to love what you do. - Steve Jobs",
-            "Time is what we want most, but what we use worst. - William Penn",
-            "The two most powerful warriors are patience and time. - Leo Tolstoy"
+            "The only way to do great work is to love what you do - Steve Jobs",
+            "Time is what we want most, but we often use it the least effectively - William Penn",
+            "The two most powerful warriors are patience and time - Leo Tolstoy"
         ],
         currentQuote: '',
         notes: '',
@@ -410,7 +419,6 @@ function clockApp() {
         },
         loadFromLocalStorage() {
             const data = JSON.parse(localStorage.getItem('clockAppData'));
-            console.log(data);
             if (data) {
                 this.showSeconds = data.showSeconds
                 this.use24Hour = data.use24Hour
