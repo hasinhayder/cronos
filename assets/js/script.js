@@ -322,6 +322,11 @@ function clockApp() {
             { name: 'GMT+13:00', zone: 'Pacific/Apia' },
             { name: 'GMT+14:00', zone: 'Pacific/Kiritimati' }
         ],
+        analogClock: {
+            hourRotation: 0,
+            minuteRotation: 0,
+            secondRotation: 0,
+        },
         init() {
             this.loadFromLocalStorage();
             this.updateClock();
@@ -330,6 +335,7 @@ function clockApp() {
             this.applyTheme();
             this.updateQuote();
             setInterval(() => this.updateQuote(), 60000); // Change quote every minute
+            setInterval(() => { this.updateAnalogClock(); }, 1000);
         },
         updateClock() {
             const now = new Date();
@@ -444,6 +450,16 @@ function clockApp() {
             } else if (event.key === 'b' || event.key === 'B') {
                 this.websitesOpen = !this.websitesOpen;
             }
-        }
+        },
+        updateAnalogClock() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            this.analogClock.secondRotation = seconds * 6; // 360 / 60 = 6 degrees per second
+            this.analogClock.minuteRotation = minutes * 6 + seconds * 0.1; // 360 / 60 = 6 degrees per minute + small movement for seconds
+            this.analogClock.hourRotation = (hours % 12) * 30 + minutes * 0.5; // 360 / 12 = 30 degrees per hour + small movement for minutes
+        },
     };
 }

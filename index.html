@@ -31,35 +31,46 @@
             pointer-events: none;
         }
 
-        [x-cloak] { display: none !important; }
+        [x-cloak] {
+            display: none !important;
+        }
     </style>
 </head>
 
-<body class="h-screen flex flex-col transition-colors duration-300 overflow-hidden" x-data="clockApp()" x-init="init()" :class="themes[currentTheme].background + ' ' + themes[currentTheme].text" @keydown.window="handleKeyPress($event)">
+<body class="h-screen flex flex-col transition-colors duration-300 overflow-hidden" x-data="clockApp()" x-init="init()"
+    :class="themes[currentTheme].background + ' ' + themes[currentTheme].text" @keydown.window="handleKeyPress($event)">
     <div id="particles-container" class="absolute inset-0 pointer-events-none" x-show="showParticles"></div>
     <header class="p-4 flex justify-between items-center relative z-10">
         <div class="flex items-center space-x-2">
             <h1 class="text-xl">Cronos</h1>
         </div>
         <div class="flex items-center space-x-4">
-            <a href="https://github.com/hasinhayder/cronos" target="_blank" class="pointer p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <a href="https://github.com/hasinhayder/cronos" target="_blank"
+                class="pointer p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9l-3 3 3 3m4.5-6l3 3-3 3" />
                 </svg>
             </a>
             <button @click="websitesOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                 </svg>
             </button>
             <button @click="notesOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                 </svg>
             </button>
             <button @click="settingsOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
             </button>
@@ -68,7 +79,20 @@
     <main class="flex-grow flex flex-col md:flex-row relative z-10">
         <div class="w-full md:w-3/4 p-8 flex flex-col justify-center">
             <div class="text-2xl font-semibold mb-2" x-text="mainClockName"></div>
-            <div id="clock" class="text-7xl sm:text-8xl md:text-10xl lg:text-11xl xl:text-12xl font-bold mb-8 text-center md:text-left tracking-tighter">
+
+            <div
+                class="analog-clock relative w-40 h-40 rounded-full border-4 border-gray-500 flex items-center justify-center">
+                <div class="hour-hand absolute bg-gray-800 w-1 h-10 origin-bottom transform"
+                    :style="'transform: translateY(-50%) rotate(' + analogClock.hourRotation + 'deg)'"></div>
+                <div class="minute-hand absolute bg-gray-600 w-1 h-14 origin-bottom transform"
+                    :style="'transform: translateY(-50%) rotate(' + analogClock.minuteRotation + 'deg)'"></div>
+                <div class="second-hand absolute bg-red-600 w-0.5 h-16 origin-bottom transform"
+                    :style="'transform: translateY(-50%) rotate(' + analogClock.secondRotation + 'deg)'"></div>
+            </div>
+
+
+            <div id="clock"
+                class="text-7xl sm:text-8xl md:text-10xl lg:text-11xl xl:text-12xl font-bold mb-8 text-center md:text-left tracking-tighter">
                 <p class="flex" x-text="currentTime">00:00:00</p>
             </div>
             <div class="md:mt-20 mt-10 text-2xl text-left" x-show="showQuote" x-text="currentQuote"></div>
@@ -78,27 +102,36 @@
             <div id="locations-container" class="space-y-6">
                 <template x-for="(location, index) in locations" :key="index">
                     <!-- <div :class="`relative p-6 ${index < locations.length - 1 ? 'border-b' : ''} ${themes[currentTheme].border} group rounded-lg shadow-md`"> -->
-                    <div :class="`relative p-6 ${index < locations.length - 1 ? 'border-b' : ''} group rounded-lg shadow-md`">
+                    <div
+                        :class="`relative p-6 ${index < locations.length - 1 ? 'border-b' : ''} group rounded-lg shadow-md`">
                         <h2 class="text-2xl font-bold mb-3" x-text="location.name"></h2>
                         <div class="text-4xl font-semibold" x-text="location.time"></div>
-                        <button :class="themes[currentTheme].button" @click="deleteLocation(index)" class="delete-location absolute top-2 right-2 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        <button :class="themes[currentTheme].button" @click="deleteLocation(index)"
+                            class="delete-location absolute top-2 right-2 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                             </svg>
                         </button>
                     </div>
                 </template>
             </div>
-            <button x-show="locations.length < locationCount" @click="addLocationOpen = true" class="mt-6 px-4 py-2 rounded" :class="themes[currentTheme].button">Add Location</button>
+            <button x-show="locations.length < locationCount" @click="addLocationOpen = true"
+                class="mt-6 px-4 py-2 rounded" :class="themes[currentTheme].button">Add Location</button>
         </div>
     </main>
     <footer class="p-4 flex justify-start items-center relative z-10">
         <template x-for="(link, index) in websites" :key="index">
-            <a x-show="link.url" :href="link.url" target="_blank" class="mr-2 p-2 px-5 rounded-full transition-colors duration-200" :class="themes[currentTheme].website" x-text="index+1"></a>
+            <a x-show="link.url" :href="link.url" target="_blank"
+                class="mr-2 p-2 px-5 rounded-full transition-colors duration-200" :class="themes[currentTheme].website"
+                x-text="index+1"></a>
         </template>
     </footer>
-    <div x-cloak x-show="settingsOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
-        <div @click.outside="settingsOpen = false" @keydown.escape.window="settingsOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg max-h-screen overflow-y-auto w-full max-w-md'">
+    <div x-cloak x-show="settingsOpen"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div @click.outside="settingsOpen = false" @keydown.escape.window="settingsOpen = false"
+            :class="themes[currentTheme].sidebar + ' p-8 rounded-lg max-h-screen overflow-y-auto w-full max-w-md'">
             <h2 class="text-2xl font-bold mb-4">Clock Settings</h2>
             <div class="mb-4">
                 <label class="block mb-2">Main Clock Name</label>
@@ -136,7 +169,8 @@
                 <label class="block mb-2">Color Theme</label>
                 <select x-model="currentTheme" :class="themes[currentTheme].input">
                     <template x-for="(theme, name) in themes" :key="name">
-                        <option :value="name" x-text="name.charAt(0).toUpperCase() + name.slice(1)" :selected="currentTheme === name"></option>
+                        <option :value="name" x-text="name.charAt(0).toUpperCase() + name.slice(1)"
+                            :selected="currentTheme === name"></option>
                     </template>
                 </select>
             </div>
@@ -144,7 +178,8 @@
                 <label class="block mb-2">Main Clock Timezone</label>
                 <select x-model="mainClockTimezone" :class="themes[currentTheme].input">
                     <template x-for="(timezone, index) in timezones" :key="index">
-                        <option :value="timezone.zone" :selected="mainClockTimezone === timezone.zone" x-text="`${timezone.name} (${timezone.zone})`"></option>
+                        <option :value="timezone.zone" :selected="mainClockTimezone === timezone.zone"
+                            x-text="`${timezone.name} (${timezone.zone})`"></option>
                     </template>
                 </select>
             </div>
@@ -152,15 +187,19 @@
                 <h3 class="text-xl font-bold mb-2">Quotes</h3>
                 <template x-for="(quote, index) in quotes" :key="index">
                     <div class="mb-2">
-                        <input type="text" x-model="quotes[index]" :class="themes[currentTheme].input + ' mb-1'" :placeholder="`Quote ${index + 1}`">
+                        <input type="text" x-model="quotes[index]" :class="themes[currentTheme].input + ' mb-1'"
+                            :placeholder="`Quote ${index + 1}`">
                     </div>
                 </template>
             </div>
-            <button @click="settingsOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 " :class="themes[currentTheme].button">Save Settings</button>
+            <button @click="settingsOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 "
+                :class="themes[currentTheme].button">Save Settings</button>
         </div>
     </div>
-    <div x-cloak x-show="addLocationOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
-        <div @keydown.escape.window="addLocationOpen = false" @click.outside = "addLocationOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg'">
+    <div x-cloak x-show="addLocationOpen"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div @keydown.escape.window="addLocationOpen = false" @click.outside="addLocationOpen = false"
+            :class="themes[currentTheme].sidebar + ' p-8 rounded-lg'">
             <h2 class="text-2xl font-bold mb-4">Add Location</h2>
             <div class="mb-4">
                 <label class="block mb-2">Location Name</label>
@@ -174,27 +213,37 @@
                     </template>
                 </select>
             </div>
-            <button @click="saveLocation" class="px-4 py-2 rounded mr-2" :class="themes[currentTheme].button">Save Location</button>
-            <button @click="addLocationOpen = false" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+            <button @click="saveLocation" class="px-4 py-2 rounded mr-2" :class="themes[currentTheme].button">Save
+                Location</button>
+            <button @click="addLocationOpen = false"
+                class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
         </div>
     </div>
     <div x-cloak x-show="notesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
-        <div @keydown.escape.window="notesOpen = false" @click.outside="notesOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-md'">
+        <div @keydown.escape.window="notesOpen = false" @click.outside="notesOpen = false"
+            :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-md'">
             <h2 class="text-2xl font-bold mb-4">Notes</h2>
-            <textarea x-model="notes" :class="themes[currentTheme].input + ' h-96 mb-4'" placeholder="Enter your notes here..."></textarea>
-            <button @click="notesOpen = false; saveToLocalStorage()" class="px-4 py-2 rounded" :class="themes[currentTheme].button">Save Note</button>
+            <textarea x-model="notes" :class="themes[currentTheme].input + ' h-96 mb-4'"
+                placeholder="Enter your notes here..."></textarea>
+            <button @click="notesOpen = false; saveToLocalStorage()" class="px-4 py-2 rounded"
+                :class="themes[currentTheme].button">Save Note</button>
         </div>
     </div>
-    <div x-cloak x-show="websitesOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
-        <div @keydown.escape.window="websitesOpen = false" @click.outside="websitesOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-md'">
+    <div x-cloak x-show="websitesOpen"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div @keydown.escape.window="websitesOpen = false" @click.outside="websitesOpen = false"
+            :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-md'">
             <h2 class="text-2xl font-bold mb-4">Bookmarks</h2>
             <template x-for="(link, index) in websites" :key="index">
                 <div class="mb-4 flex items-center">
-                    <input type="text" x-model="websites[index].url" :class="themes[currentTheme].input + ' flex-grow mr-2'" :placeholder="`Website ${index + 1} URL`">
+                    <input type="text" x-model="websites[index].url"
+                        :class="themes[currentTheme].input + ' flex-grow mr-2'"
+                        :placeholder="`Website ${index + 1} URL`">
 
                 </div>
             </template>
-            <button @click="websitesOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 rounded" :class="themes[currentTheme].button">Save Bookmarks</button>
+            <button @click="websitesOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 rounded"
+                :class="themes[currentTheme].button">Save Bookmarks</button>
         </div>
     </div>
     <script src="assets/js/script.js?v=1.0.1"></script>
