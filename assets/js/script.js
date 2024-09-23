@@ -43,6 +43,7 @@ function clockApp() {
         newLocationName: '',
         newLocationTimezone: '',
         showParticles: true,
+        showBookmarks: true,
         quotes: [
             "The only way to do great work is to love what you do - Steve Jobs",
             "Time is what we want most, but we often use it the least effectively - William Penn",
@@ -363,14 +364,18 @@ function clockApp() {
             return now.toLocaleTimeString('en-GB', options).toUpperCase();
         },
         applyTheme() {
-            document.body.className = `h-screen flex flex-col transition-colors duration-300 overflow-hidden ${this.themes[this.currentTheme].background} ${this.themes[this.currentTheme].text}`;
+            //find all .particle and apply this class name particle + this.themes[this.currentTheme].website
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle) => {
+                particle.className = `particle ${this.themes[this.currentTheme].website}`;
+            });
         },
         createParticles() {
             const container = document.getElementById('particles-container');
             container.innerHTML = '';
             for (let i = 0; i < 50; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'particle';
+                particle.className = 'particle ' + this.themes[this.currentTheme].website;
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 particle.style.animation = `float ${Math.random() * 3 + 2}s ease-in-out infinite`;
@@ -413,7 +418,8 @@ function clockApp() {
                 websites: this.websites,
                 showQuote: this.showQuote,
                 newLocationTimezone: this.newLocationTimezone,
-                locationCount: this.locationCount
+                locationCount: this.locationCount,
+                showBookmarks: this.showBookmarks
             };
             localStorage.setItem('clockAppData', JSON.stringify(data));
         },
@@ -431,8 +437,9 @@ function clockApp() {
                 this.notes = data.notes
                 this.websites = data.websites
                 this.showQuote = data.showQuote,
-                    this.newLocationTimezone = data.newLocationTimezone,
-                    this.locationCount = data.locationCount
+                this.newLocationTimezone = data.newLocationTimezone,
+                this.locationCount = data.locationCount,
+                this.showBookmarks = data.showBookmarks
             }
         },
         handleKeyPress(event) {

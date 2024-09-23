@@ -47,7 +47,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9l-3 3 3 3m4.5-6l3 3-3 3" />
                 </svg>
             </a>
-            <button @click="websitesOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
+            <button x-show="showBookmarks == true" @click="websitesOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                 </svg>
@@ -68,7 +68,7 @@
     <main class="flex-grow flex flex-col md:flex-row relative z-10">
         <div class="w-full md:w-3/4 p-8 flex flex-col justify-center">
             <div class="text-2xl font-semibold mb-2" x-text="mainClockName"></div>
-            <div id="clock" class="text-7xl sm:text-8xl md:text-10xl lg:text-11xl xl:text-12xl font-bold mb-8 text-center md:text-left tracking-tighter">
+            <div id="clock" class="text-7xl sm:text-8xl md:text-10xl lg:text-10xl xl:text-11xl font-bold mb-8 text-center md:text-left tracking-tighter">
                 <p class="flex" x-text="currentTime">00:00:00</p>
             </div>
             <div class="md:mt-20 mt-10 text-2xl text-left" x-show="showQuote" x-text="currentQuote"></div>
@@ -92,38 +92,43 @@
             <button x-show="locations.length < locationCount" @click="addLocationOpen = true" class="mt-6 px-4 py-2 rounded" :class="themes[currentTheme].button">Add Location</button>
         </div>
     </main>
-    <footer class="p-4 flex justify-start items-center relative z-10">
+    <footer x-show="showBookmarks == true" class="p-4 flex justify-start items-center relative z-10">
         <template x-for="(link, index) in websites" :key="index">
             <a x-show="link.url" :href="link.url" target="_blank" class="mr-2 p-2 px-5 rounded-full transition-colors duration-200" :class="themes[currentTheme].website" x-text="index+1"></a>
         </template>
     </footer>
     <div x-cloak x-show="settingsOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
         <div @click.outside="settingsOpen = false" @keydown.escape.window="settingsOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg max-h-screen overflow-y-auto w-full max-w-md'">
-            <h2 class="text-2xl font-bold mb-4">Clock Settings</h2>
             <div class="mb-4">
                 <label class="block mb-2">Main Clock Name</label>
                 <input type="text" x-model="mainClockName" :class="themes[currentTheme].input">
             </div>
             <div class="mb-4">
-                <label class="flex items-center">
+                <label class="flex">
                     <input type="checkbox" x-model="showSeconds" class="mr-2">
                     Show Seconds
                 </label>
             </div>
             <div class="mb-4">
-                <label class="flex items-center">
+                <label class="flex">
                     <input type="checkbox" x-model="use24Hour" class="mr-2">
                     Use 24-Hour Format
                 </label>
             </div>
             <div class="mb-4">
-                <label class="flex items-center">
+                <label class="flex">
+                    <input type="checkbox" x-model="showBookmarks" class="mr-2">
+                    Show Bookmarks
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="flex">
                     <input type="checkbox" x-model="showParticles" class="mr-2">
                     Show Particles
                 </label>
             </div>
             <div class="mb-4">
-                <label class="flex items-center">
+                <label class="flex">
                     <input type="checkbox" x-model="showQuote" class="mr-2">
                     Show Quote
                 </label>
@@ -134,7 +139,7 @@
             </div>
             <div class="mb-4">
                 <label class="block mb-2">Color Theme</label>
-                <select x-model="currentTheme" :class="themes[currentTheme].input">
+                <select @change="applyTheme()" x-model="currentTheme" :class="themes[currentTheme].input">
                     <template x-for="(theme, name) in themes" :key="name">
                         <option :value="name" x-text="name.charAt(0).toUpperCase() + name.slice(1)" :selected="currentTheme === name"></option>
                     </template>
@@ -191,7 +196,6 @@
             <template x-for="(link, index) in websites" :key="index">
                 <div class="mb-4 flex items-center">
                     <input type="text" x-model="websites[index].url" :class="themes[currentTheme].input + ' flex-grow mr-2'" :placeholder="`Website ${index + 1} URL`">
-
                 </div>
             </template>
             <button @click="websitesOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 rounded" :class="themes[currentTheme].button">Save Bookmarks</button>
