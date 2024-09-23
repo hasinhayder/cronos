@@ -214,5 +214,50 @@ const themes = {
         input: 'bg-pink-100 text-pink-900 p-2 rounded w-full border border-pink-400',
         website: 'bg-pink-400 text-white hover:bg-pink-300',
         button: 'bg-pink-400 text-white hover:bg-pink-500'
+    },
+    sand: {
+        background: 'bg-yellow-200',
+        text: 'text-yellow-900',
+        sidebar: 'bg-yellow-300',
+        border: 'border-yellow-400',
+        input: 'bg-yellow-100 text-yellow-900 p-2 rounded w-full border border-yellow-400',
+        website: 'bg-yellow-500 text-white hover:bg-yellow-400',
+        button: 'bg-yellow-500 text-white hover:bg-yellow-600'
+    },
+    dusk: {
+        background: 'bg-gray-800',
+        text: 'text-orange-100',
+        sidebar: 'bg-gray-900',
+        border: 'border-gray-700',
+        input: 'bg-gray-700 text-orange-100 p-2 rounded w-full border border-gray-600',
+        website: 'bg-gray-700 text-orange-100 hover:bg-gray-600',
+        button: 'bg-gray-700 text-orange-100 hover:bg-gray-600'
+    },
+    ice: {
+        background: 'bg-blue-100',
+        text: 'text-blue-800',
+        sidebar: 'bg-blue-200',
+        border: 'border-blue-300',
+        input: 'bg-blue-50 text-blue-800 p-2 rounded w-full border border-blue-300',
+        website: 'bg-blue-500 text-white hover:bg-blue-400',
+        button: 'bg-blue-500 text-white hover:bg-blue-600'
+    },
+    bronze: {
+        background: 'bg-orange-400',
+        text: 'text-orange-900',
+        sidebar: 'bg-orange-500',
+        border: 'border-orange-600',
+        input: 'bg-orange-300 text-orange-900 p-2 rounded w-full border border-orange-600',
+        website: 'bg-orange-600 text-white hover:bg-orange-500',
+        button: 'bg-orange-600 text-white hover:bg-orange-700'
+    },
+    copper: {
+        background: 'bg-orange-600',
+        text: 'text-orange-100',
+        sidebar: 'bg-orange-700',
+        border: 'border-orange-800',
+        input: 'bg-orange-500 text-orange-100 p-2 rounded w-full border border-orange-800',
+        website: 'bg-orange-800 text-white hover:bg-orange-700',
+        button: 'bg-orange-800 text-white hover:bg-orange-900'
     }
 }
