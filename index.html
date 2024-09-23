@@ -7,6 +7,7 @@
     <title>Cronos</title>
     <script src="//cdn.tailwindcss.com"></script>
     <script defer src="//cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+    <link rel="icon" href="favicon.png" type="image/x-icon">
     <style>
         @keyframes float {
             0% {
@@ -54,16 +55,33 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9l-3 3 3 3m4.5-6l3 3-3 3" />
                 </svg>
             </a>
+            <!-- Alarm Button Start -->
+            <button x-show="alarmRang == false" @click="alarmOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
+                <!-- Alarm SVG Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405C18.79 14.79 18 13.42 18 12V8c0-3.31-2.69-6-6-6S6 4.69 6 8v4c0 1.42-.79 2.79-1.595 3.595L3 17h5m7 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+            </button>
+
+            <!-- Alarm Button End -->
+            <button @click="stopAlarm()" x-show="alarmRang == true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <rect x="6" y="6" width="12" height="12" rx="2" ry="2" />
+                </svg>
+            </button>
+
             <button x-show="showBookmarks == true" @click="websitesOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                 </svg>
             </button>
+
             <button @click="notesOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                 </svg>
             </button>
+
             <button @click="settingsOpen = true" class="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
@@ -87,7 +105,7 @@
         <!-- Clock Section End -->
 
         <!-- Sidebar Section Start -->
-        <div id="sidebar" class="w-full md:w-1/4 p-8 flex flex-col justify-around transition-colors duration-300" ">
+        <div x-cloak id="sidebar" class="w-full md:w-1/4 p-8 flex flex-col justify-around transition-colors duration-300" ">
             <div id=" locations-container" class="space-y-6">
             <template x-for="(location, index) in locations" :key="index">
                 <div :class="`relative p-6 ${index < locations.length - 1 ? 'border-b' : ''} group rounded-lg shadow-md`">
@@ -108,7 +126,7 @@
                 </div>
             </template>
         </div>
-        <button x-show="locations.length < 3" @click="addLocationOpen = true" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Location</button>
+        <button x-cloak x-show="locations.length < 3" @click="addLocationOpen = true" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Location</button>
         </div>
         <!-- Sidebar Section End -->
     </main>
@@ -271,6 +289,22 @@
         </div>
     </div>
     <!-- Bookmarks Modal End -->
+
+    <!-- Alarm Modal Start -->
+    <div x-cloak x-show="alarmOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div @click.outside="alarmOpen = false" @keydown.escape.window="alarmOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg w-full max-w-sm'">
+            <h2 class="text-2xl font-bold mb-4">Set Alarm</h2>
+            <div class="mb-4">
+                <label class="block mb-2">Alarm Time</label>
+                <input type="time" x-model="alarmTime" :class="themes[currentTheme].input">
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button @click="alarmOpen = false" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Cancel</button>
+                <button @click="setAlarm" class="px-4 py-2 rounded" :class="themes[currentTheme].button">Save Alarm</button>
+            </div>
+        </div>
+    </div>
+    <!-- Alarm Modal End -->
 
     <script src="assets/js/tailwind.config.js?v=1.2"></script>
     <script src="assets/js/timezones.js?v=1.2"></script>
