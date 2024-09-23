@@ -126,7 +126,7 @@
                 </div>
             </template>
         </div>
-        <button x-cloak x-show="locations.length < 3" @click="addLocationOpen = true" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Location</button>
+        <button x-cloak x-show="locations.length < locationCount" @click="addLocationOpen = true" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Location</button>
         </div>
         <!-- Sidebar Section End -->
     </main>
@@ -286,6 +286,7 @@
                 </div>
             </template>
             <button @click="websitesOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 rounded" :class="themes[currentTheme].button">Save Bookmarks</button>
+            <button @click="clearWebsites()" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Clear Bookmarks</button>
         </div>
     </div>
     <!-- Bookmarks Modal End -->
@@ -299,8 +300,8 @@
                 <input type="time" x-model="alarmTime" :class="themes[currentTheme].input">
             </div>
             <div class="flex justify-end space-x-2">
-                <button @click="alarmOpen = false" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Cancel</button>
                 <button @click="setAlarm" class="px-4 py-2 rounded" :class="themes[currentTheme].button">Save Alarm</button>
+                <button @click="alarmOpen = false" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Cancel</button>
             </div>
         </div>
     </div>
@@ -309,7 +310,7 @@
     <script src="assets/js/tailwind.config.js?v=1.2"></script>
     <script src="assets/js/timezones.js?v=1.2"></script>
     <script src="assets/js/themes.js?v=1.2"></script>
-    <script src="assets/js/script.js?v=1.3"></script>
+    <script src="assets/js/script.js?v=1.3.1"></script>
 
 </body>
 

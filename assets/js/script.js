@@ -4,7 +4,7 @@
  * Author: Hasin Hayder
  * URL: https://github.com/hasinhayder/
  * License: MIT
- * Version: 1.3
+ * Version: 1.3.1
  */
 
 function clockApp() {
@@ -148,8 +148,17 @@ function clockApp() {
             const randomIndex = Math.floor(Math.random() * this.quotes.length)
             this.currentQuote = this.quotes[randomIndex]
         },
-        getWebsiteIcon(index) {
-            return this.websites[index].icon || 'globe'
+        clearWebsites() {
+            this.websites = [
+                { url: '' },
+                { url: '' },
+                { url: '' },
+                { url: '' },
+                { url: '' },
+                { url: '' }
+            ]
+            this.saveToLocalStorage()
+            this.websitesOpen = false
         },
         saveToLocalStorage() {
             this.locations = this.locations.slice(0, this.locationCount)
@@ -186,10 +195,10 @@ function clockApp() {
                 this.notes = data.notes
                 this.websites = data.websites
                 this.showQuote = data.showQuote,
-                this.newLocationTimezone = data.newLocationTimezone,
-                this.locationCount = data.locationCount,
-                this.showBookmarks = data.showBookmarks,
-                this.alarmTime = data.alarmTime
+                    this.newLocationTimezone = data.newLocationTimezone,
+                    this.locationCount = data.locationCount,
+                    this.showBookmarks = data.showBookmarks,
+                    this.alarmTime = data.alarmTime
             }
         },
         handleKeyPress(event) {
@@ -211,7 +220,7 @@ function clockApp() {
                 this.alarmOpen = false
                 this.alarmRang = false // Reset alarm rang state
                 this.saveToLocalStorage()
-            } 
+            }
         },
 
         checkAlarm() {
@@ -222,7 +231,7 @@ function clockApp() {
                     minute: '2-digit',
                     timeZone: this.mainClockTimezone
                 }
-                if(this.use24Hour) {
+                if (this.use24Hour) {
                     options.hour12 = false
                 }
 
@@ -239,7 +248,7 @@ function clockApp() {
             this.alarmSound.play()
         },
 
-        stopAlarm(){
+        stopAlarm() {
             this.alarmSound.pause()
             this.alarmRang = false
         }
