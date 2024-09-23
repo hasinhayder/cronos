@@ -12,7 +12,7 @@ Check the live demo here - [Live Demo](https://hasinhayder.github.io/cronos/)
 - **Themes**: Cronos comes with beautiful color themes and you can switch between them.
 - **Quotes**: Display motivational quotes. You can change them too!
 - **Particles**: Optional particle animation for a dynamic look.
-- **Notes**: Keep personal notes within the app.
+- **Notes**: Store your personal notes directly within the app. They're securely saved in your browser's local storage, ensuring that your privacy is protected. Only you can see your notes.
 - **Bookmarks**: Quick access to your favorite websites on the bottom left corner. Add up to six bookmarks.
 - **Memorization**: Remembers your current settings for future visits.
 
