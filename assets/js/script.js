@@ -4,7 +4,7 @@
  * Author: Hasin Hayder
  * URL: https://github.com/hasinhayder/
  * License: MIT
- * Version: 1.2
+ * Version: 1.3
  */
 
 function clockApp() {
