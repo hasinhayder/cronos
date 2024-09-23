@@ -285,8 +285,9 @@
                     <input type="text" x-model="websites[index].url" :class="themes[currentTheme].input + ' flex-grow mr-2'" :placeholder="`Website ${index + 1} URL`">
                 </div>
             </template>
-            <button @click="websitesOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 rounded" :class="themes[currentTheme].button">Save Bookmarks</button>
-            <button @click="clearWebsites()" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Clear Bookmarks</button>
+            <button @click="websitesOpen = false; saveToLocalStorage()" class="text-white px-4 py-2 rounded" :class="themes[currentTheme].button">Save</button>
+            <button @click="clearWebsites()" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Clear All</button>
+            <button @click="websitesOpen = false" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Cancel</button>
         </div>
     </div>
     <!-- Bookmarks Modal End -->
