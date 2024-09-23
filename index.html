@@ -110,7 +110,7 @@
             <template x-for="(location, index) in locations" :key="index">
                 <div :class="`relative p-6 ${index < locations.length - 1 ? 'border-b' : ''} group rounded-lg shadow-md`">
                     <h2 class="text-2xl font-bold mb-3" x-text="location.name"></h2>
-                    <div class="text-4xl font-semibold" x-text="getLocationTime(location.timezone)"></div>
+                    <div class="text-4xl font-semibold" x-text="location.time"></div>
                     <div class="absolute top-2 right-2 flex space-x-2">
                         <button @click="editLocation(index)" :class="themes[currentTheme].button" class="edit-location p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -272,6 +272,7 @@
             <h2 class="text-2xl font-bold mb-4">Notes</h2>
             <textarea x-model="notes" :class="themes[currentTheme].input + ' h-96 mb-4'" placeholder="Enter your notes here..."></textarea>
             <button @click="notesOpen = false; saveToLocalStorage()" class="px-4 py-2 rounded" :class="themes[currentTheme].button">Save Note</button>
+            <button @click="notesOpen = false" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Cancel</button>
         </div>
     </div>
     <!-- Notes Modal End -->
