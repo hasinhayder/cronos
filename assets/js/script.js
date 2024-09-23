@@ -196,14 +196,16 @@ function clockApp() {
             }
         },
         handleKeyPress(event) {
-            return;
-            if (event.key === 'n' || event.key === 'N') {
-                this.notesOpen = !this.notesOpen;
-            } else if (event.key === 's' || event.key === 'S') {
-                this.settingsOpen = !this.settingsOpen;
-            } else if (event.key === 'b' || event.key === 'B') {
-                this.websitesOpen = !this.websitesOpen;
+            if (event.altKey || event.metaKey) { // Checks if the Alt (or Option) key is pressed
+                if (event.code === 'KeyN') {
+                    this.notesOpen = !this.notesOpen;
+                } else if (event.code === 'KeyS') {
+                    this.settingsOpen = !this.settingsOpen;
+                } else if (event.code === 'KeyB') {
+                    this.websitesOpen = !this.websitesOpen;
+                }
             }
         }
+        
     };
 }

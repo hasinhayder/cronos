@@ -17,7 +17,11 @@ Check the live demo here - [Live Demo](https://hasinhayder.github.io/cronos/)
 - **Memorization**: Remembers your current settings for future visits.
 
 ## Keyboard Shortcuts
-- **Close Settings**: Press `Escape` key to close these notes, settings and bookmarks sections.
+
+- **Settings**: Press `alt/option` + `s` to open the settings panel.
+- **Notes**: Press `alt/option` +`n` to open the notes section.
+- **Websites**: Press `alt/option` +`b` to open the quick access websites panel.
+- **Close Settings**: Press `Escape` key to close these sections.
 
 
 ## Technologies Used
