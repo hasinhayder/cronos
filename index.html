@@ -31,12 +31,14 @@
             pointer-events: none;
         }
 
-        [x-cloak] { display: none !important; }
+        [x-cloak] {
+            display: none !important;
+        }
     </style>
 </head>
 
 <body class="h-screen flex flex-col transition-colors duration-300 overflow-hidden" x-data="clockApp()" x-init="init()" :class="themes[currentTheme].background + ' ' + themes[currentTheme].text" @keydown.window="handleKeyPress($event)">
-    
+
     <!-- Particles Container Start -->
     <div id="particles-container" class="absolute inset-0 pointer-events-none" x-show="showParticles"></div>
     <!-- Particles Container End -->
@@ -86,27 +88,27 @@
 
         <!-- Sidebar Section Start -->
         <div id="sidebar" class="w-full md:w-1/4 p-8 flex flex-col justify-around transition-colors duration-300" ">
-            <div id="locations-container" class="space-y-6">
-                <template x-for="(location, index) in locations" :key="index">
-                    <div :class="`relative p-6 ${index < locations.length - 1 ? 'border-b' : ''} group rounded-lg shadow-md`">
-                        <h2 class="text-2xl font-bold mb-3" x-text="location.name"></h2>
-                        <div class="text-4xl font-semibold" x-text="getLocationTime(location.timezone)"></div>
-                        <div class="absolute top-2 right-2 flex space-x-2">
-                            <button @click="editLocation(index)" :class="themes[currentTheme].button"  class="edit-location p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                </svg>
-                            </button>
-                            <button @click="deleteLocation(index)" :class="themes[currentTheme].button" class="delete-location p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                </svg>
-                            </button>
-                        </div>
+            <div id=" locations-container" class="space-y-6">
+            <template x-for="(location, index) in locations" :key="index">
+                <div :class="`relative p-6 ${index < locations.length - 1 ? 'border-b' : ''} group rounded-lg shadow-md`">
+                    <h2 class="text-2xl font-bold mb-3" x-text="location.name"></h2>
+                    <div class="text-4xl font-semibold" x-text="getLocationTime(location.timezone)"></div>
+                    <div class="absolute top-2 right-2 flex space-x-2">
+                        <button @click="editLocation(index)" :class="themes[currentTheme].button" class="edit-location p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>
+                        </button>
+                        <button @click="deleteLocation(index)" :class="themes[currentTheme].button" class="delete-location p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                        </button>
                     </div>
-                </template>
-            </div>
-            <button x-show="locations.length < 3" @click="addLocationOpen = true" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Location</button>
+                </div>
+            </template>
+        </div>
+        <button x-show="locations.length < 3" @click="addLocationOpen = true" class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Location</button>
         </div>
         <!-- Sidebar Section End -->
     </main>
@@ -172,8 +174,12 @@
             <div class="mb-4">
                 <label class="block mb-2">Main Clock Timezone</label>
                 <select x-model="mainClockTimezone" :class="themes[currentTheme].input">
-                    <template x-for="(timezone, index) in timezones" :key="index">
-                        <option :value="timezone.zone" :selected="mainClockTimezone === timezone.zone" x-text="`${timezone.name} (${timezone.zone})`"></option>
+                    <template x-for="group in timezones" :key="group.group">
+                        <optgroup :label="group.group">
+                            <template x-for="timezone in group.zones" :key="timezone.zone">
+                                <option :value="timezone.zone" :selected="mainClockTimezone === timezone.zone" x-text="timezone.name"></option>
+                            </template>
+                        </optgroup>
                     </template>
                 </select>
             </div>
@@ -192,7 +198,7 @@
 
     <!-- Add Location Modal Start -->
     <div x-cloak x-show="addLocationOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
-        <div @keydown.escape.window="addLocationOpen = false" @click.outside = "addLocationOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg'">
+        <div @keydown.escape.window="addLocationOpen = false" @click.outside="addLocationOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg'">
             <h2 class="text-2xl font-bold mb-4">Add Location</h2>
             <div class="mb-4">
                 <label class="block mb-2">Location Name</label>
@@ -201,8 +207,12 @@
             <div class="mb-4">
                 <label class="block mb-2">Timezone</label>
                 <select x-model="newLocationTimezone" :class="themes[currentTheme].input">
-                    <template x-for="(timezone,index) in timezones" :key="index">
-                        <option :value="timezone.zone" x-text="`${timezone.name} (${timezone.zone})`"></option>
+                    <template x-for="group in timezones" :key="group.group">
+                        <optgroup :label="group.group">
+                            <template x-for="timezone in group.zones" :key="timezone.zone">
+                                <option :value="timezone.zone" x-text="timezone.name"></option>
+                            </template>
+                        </optgroup>
                     </template>
                 </select>
             </div>
@@ -213,7 +223,7 @@
     <!-- Add Location Modal End -->
 
     <!-- Edit Location Modal Start -->
-    <div x-show="editLocationOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+    <div x-cloak x-show="editLocationOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
         <div @click.outside="editLocationOpen = false" :class="themes[currentTheme].sidebar + ' p-8 rounded-lg'">
             <h2 class="text-2xl font-bold mb-4">Edit Location</h2>
             <div class="mb-4">
@@ -223,8 +233,12 @@
             <div class="mb-4">
                 <label class="block mb-2">Timezone</label>
                 <select x-model="editingLocation.timezone" :class="themes[currentTheme].input">
-                    <template x-for="(timezone,index) in timezones" :key="index">
-                        <option :value="timezone.zone" x-text="`${timezone.name} (${timezone.zone})`"></option>
+                    <template x-for="group in timezones" :key="group.group">
+                        <optgroup :label="group.group">
+                            <template x-for="timezone in group.zones" :key="timezone.zone">
+                                <option :value="timezone.zone" :selected="mainClockTimezone === timezone.zone" x-text="timezone.name"></option>
+                            </template>
+                        </optgroup>
                     </template>
                 </select>
             </div>
@@ -258,9 +272,9 @@
     </div>
     <!-- Bookmarks Modal End -->
 
-    <script src="assets/js/timezones.js?v=1.1.1"></script>
-    <script src="assets/js/themes.js?v=1.1.1"></script>
-    <script src="assets/js/script.js?v=1.1.1"></script>
+    <script src="assets/js/timezones.js?v=1.2"></script>
+    <script src="assets/js/themes.js?v=1.2"></script>
+    <script src="assets/js/script.js?v=1.2"></script>
 
 </body>
 
