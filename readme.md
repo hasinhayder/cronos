@@ -15,6 +15,7 @@ Check the live demo here - [Live Demo](https://hasinhayder.github.io/cronos/)
 - **Notes**: Store your personal notes directly within the app. They're securely saved in your browser's local storage, ensuring that your privacy is protected. Only you can see your notes.
 - **Bookmarks**: Quick access to your favorite websites on the bottom left corner. Add up to six bookmarks.
 - **Memorization**: Remembers your current settings for future visits.
+- **Alarm**: Set alarms with pause functionality.
 
 ## Keyboard Shortcuts
 
@@ -22,7 +23,6 @@ Check the live demo here - [Live Demo](https://hasinhayder.github.io/cronos/)
 - **Notes**: Press `alt/option` +`n` to open the notes section.
 - **Websites**: Press `alt/option` +`b` to open the quick access websites panel.
 - **Close Settings**: Press `Escape` key to close these sections.
-
 
 ## Technologies Used
 
@@ -40,5 +40,4 @@ Check the live demo here - [Live Demo](https://hasinhayder.github.io/cronos/)
 ## Contributing
 
 Feel free to fork the project and submit pull requests. Contributions are welcome!
-
 
