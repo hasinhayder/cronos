@@ -476,6 +476,4 @@ const timezones = [
     { name: 'Etc/UTC', zone: 'Etc/UTC' },
     { name: 'Etc/Universal', zone: 'Etc/Universal' },
     { name: 'Etc/Zulu', zone: 'Etc/Zulu' },
-
-    // Etcetera – you can add more regions as needed
 ];
