@@ -105,6 +105,8 @@ function clockApp() {
             particles.forEach((particle) => {
                 particle.className = `particle ${this.themes[this.currentTheme].website}`
             })
+            // Save the current color scheme to local storage when switching theme
+            this.saveToLocalStorage()
         },
         createParticles() {
             const container = document.getElementById('particles-container')
